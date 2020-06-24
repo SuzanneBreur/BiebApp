@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org.ui"
+	xmlns:rich="http://richfaces.org/rich">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Categorie</title>
+<link href="bibliostyle.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<h:form>
+		<h:outputLabel value="Categorieën" styleClass="kop" />
+		<p />
+		<h:panelGrid columns="2" styleClass="knoppenOnder" >
+			<h:panelGroup>
+				<div
+					style="width: 270px; height: 320px; display: inline-block; overflow-x: auto; overflow-y: auto;">
+					<h:dataTable value="#{CategorieenBean.categorieen}" var="item"
+						style="width: 250px; height: 300px;" styleClass="table"
+						headerClass="tableHeader" rowClasses="tableRow, tableRowAlt">
+						<h:column>
+							<f:facet name="header">
+								<h:outputLabel value="Omschrijving" />
+							</f:facet>
+							<h:commandLink value="#{item.omschrijving}"
+								action="#{CategorieenBean.selecteer(item.categorieId)}" />
+						</h:column>
+					</h:dataTable>
+				</div>
+			</h:panelGroup>
+			<h:panelGroup>
+				<h:commandButton action="#{CategorieenBean.wijzigen()}" value="Wijzigen" styleClass="knop, knopGroot" 
+				disabled="#{empty CategorieenBean.geselecteerdeCategorie}" />
+				<br/>
+				<h:commandButton action="#{CategorieenBean.verwijderen()}" value="Verwijderen" styleClass="knop, knopGroot" 
+				disabled="#{empty CategorieenBean.geselecteerdeCategorie}" 
+				onclick= "return confirm ('Weet u zeker dat u #{CategorieenBean.geselecteerdeCategorie.omschrijving} wilt verwijderen?') "/>
+			</h:panelGroup>
+		</h:panelGrid>
+		<h:commandButton action="#{CategorieenBean.nieuw()}" value="Nieuw" styleClass="knop, knopGroot" />
+		<h:commandButton action="#{CategorieenBean.terug()}" value="Terug" styleClass="knop, knopGroot" />
+		<h:messages />
+		<p />
+		<h:outputLabel
+			value="Geselecteerd: #{CategorieenBean.getGeselecteerdeCategorie().getOmschrijving()}"
+			rendered="#{not empty CategorieenBean.getGeselecteerdeCategorie()}" />
+	</h:form>
+</body>
+</html>
